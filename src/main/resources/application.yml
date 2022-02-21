@@ -1,0 +1,38 @@
+server:
+  port: 8096
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book_bank_db
+    #url: jdbc:mariadb://169.254.231.76:3306/BookBank
+    #username: root
+    #password: allthewayup
+    username: aaron
+    password: aaron
+    #driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      show: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+      #naming:
+       # physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  http:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+
+file:
+  upload:
+    url: /home/bkaaron/Desktop/Live//
