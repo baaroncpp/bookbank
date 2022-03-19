@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,31 +38,31 @@ public class SearchServiceImp implements SearchService {
 
         String searchValue = searchDto.getSearch();
 
-        if(searchDto.isAuthor()){
+        if(searchDto.isAuthor() && !searchValue.isEmpty()){
             return authorSearch(searchValue, pageable);
         }
 
-        if(searchDto.isTitle()){
+        if(searchDto.isTitle() && !searchValue.isEmpty()){
             return titleSearch(searchValue, pageable);
         }
 
-        if(searchDto.isPublisher()){
+        if(searchDto.isPublisher() && !searchValue.isEmpty()){
             return publisherSearch(searchValue, pageable);
         }
 
         if(searchDto.isTopic()){
-            return topicSearch(AppUtilities.stringToLong(searchValue), pageable);
+            return topicSearch(AppUtilities.stringToLong("1"), pageable);
         }
 
-        if(searchDto.isYear()){
+        if(searchDto.isYear() && !searchValue.isEmpty()){
             return yearSearch(searchValue, pageable);
         }
 
-        if(searchDto.isMd5()){
+        if(searchDto.isMd5() && !searchValue.isEmpty()){
             return md5Search(searchValue);
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

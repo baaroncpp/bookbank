@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/book_bank_db
-    #url: jdbc:mariadb://169.254.231.76:3306/BookBank
+    #url: jdbc:mariadb://localhost:3306/book_bank_db
     #username: root
     #password: allthewayup
     username: aaron
@@ -20,8 +20,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-      #naming:
-       # physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
   http:
     multipart:
@@ -36,3 +34,5 @@ spring:
 file:
   upload:
     url: /home/bkaaron/Desktop/Live//
+    #url: /volume1/bookbankapp//
+    #url: ${UPLOAD_FOLDER}

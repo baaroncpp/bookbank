@@ -86,8 +86,6 @@ public class BookBankServiceImp implements BookBankService {
 
     @Override
     public BookDto getBookById(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-
         return dtoService.convertBookToDto(bookRepository.findById(id).get());
     }
 

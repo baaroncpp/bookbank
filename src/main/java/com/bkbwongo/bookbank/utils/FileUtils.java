@@ -18,7 +18,7 @@ public class FileUtils {
 
     private FileUtils() { }
 
-    public static String folderPath = "/home/bkaaron/Desktop/Live//";
+    public static final String folderPath = "/home/bkaaron/Desktop/Live//";
 
     public static final Path filePath = Paths.get(folderPath);
 

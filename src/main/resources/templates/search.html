@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BookBank Customized</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.5.0.2.min.css">
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+    <br>
+    <h1  class="display-5" style="text-align: center;">BookBank</h1>
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-12">
+            <div class="container d-flex justify-content-center">
+                <form method="post" th:action="@{/}" th:object="${searchTemplateObject}">
+                    <div class="col-md-12">
+                    <div class="row d-flex justify-content-center">
+                            <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" th:field="*{searchValue}" name="searchValue" class="form-control" placeholder="Search..." aria-describedby="button-addon2"/>
+                                        <button class="btn btn-secondary" type="submit" id="button-addon2">Search</button>
+                                    </div>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" th:field="*{searchBy}" name="searchBy">
+                                    <option value="all" selected>All</option>
+                                    <option value="title">Title</option>
+                                    <option value="author">Author</option>
+                                    <option value="year">Year</option>
+                                    <option value="md5">MD5</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-outline">
+                                    <input type="number" th:field="*{page}" name="page" id="page" class="form-control" placeholder="Page" style="height: 60%; margin: 2px;" max="20" min="0" value="0"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-outline">
+                                    <input type="number" th:field="*{size}" name="size" id="size" class="form-control" placeholder="Size" style="height: 60%; margin: 2px;" max="50" min="1" value="1"/>
+                                </div>
+                            </div>
+
+                    </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+               <table class="table" id="search_table">
+                   <thead class="table-dark">
+                       <tr>
+                           <th>#</th>
+                           <th>Author</th>
+                           <th>Title</th>
+                           <th>Description</th>
+                           <th>Isbn</th>
+                           <th>Year</th>
+                           <th>File</th>
+                       </tr>
+                   </thead>
+                   <tbody id="table_body" style="font-size: 14px;">
+                   <tr th:if="${books.empty}">
+                       <td colspan="7" style="text-align: center;"> No Books Found </td>
+                   </tr>
+                   <tr th:each="book, bookStat : ${books}">
+                       <td><span th:text="${bookStat.count}" style="font-weight: bold;"></span></td>
+                       <td><span th:text="${book?.author}"></span></td>
+                       <td><span th:text="${book?.title}"></span></td>
+                       <td><span th:text="${book?.description}"></span></td>
+                       <td><span th:text="${book?.isbn}"></span></td>
+                       <td style="text-align: center;"><span th:text="${book?.year}"></span></td>
+                       <td><a th:href="@{|/download?id=${book.id}|}"><button  class="btn btn-secondary" id='download_btn' style="font-size: 14px;">Download</button></a></td>
+                   </tr>
+                   </tbody>
+                   
+               </table>     
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

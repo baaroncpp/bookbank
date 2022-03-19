@@ -40,7 +40,6 @@ public class AppUtilities {
 
     public static String dateFormatter(){
         LocalDateTime myDateObj = LocalDateTime.now();
-        System.out.println("Before formatting: " + myDateObj);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         return myDateObj.format(myFormatObj);
     }

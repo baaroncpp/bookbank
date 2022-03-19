@@ -33,4 +33,5 @@ public class BookDto {
     private String filePath;
     private String originalFileName;
     private String language;
+    private String isbn;
 }

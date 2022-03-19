@@ -1,5 +1,6 @@
 package com.bkbwongo.bookbank.dto.service;
 
+import com.bkbwongo.bookbank.commons.exceptions.BadRequestException;
 import com.bkbwongo.bookbank.dto.models.BookDto;
 import com.bkbwongo.bookbank.dto.models.TopicDto;
 import com.bkbwongo.bookbank.jpa.models.Book;
@@ -44,7 +45,7 @@ public class DtoService {
 
         Optional<Topic> topic = topicRepository.findById(bookDto.getTopicId());
         if(!topic.isPresent()){
-            throw new RuntimeException(String.format("Topic with ID %s does not exist", bookDto.getTopicId()));
+            throw new BadRequestException(String.format("Topic with ID %s does not exist", bookDto.getTopicId()));
         }
 
         book.setTopic(topic.get());

@@ -35,18 +35,13 @@ public class BookBankApi {
         return ResponseEntity.ok(bookBankService.getTopics());
     }
 
-    @DeleteMapping(path = "topic/{id}")
-    public void deleteTopicById(@PathVariable("id") Long id){
-        //bookBankService.deleteTopic(id);
-    }
-
     @GetMapping(path = "books/{title}", produces = APPLICATION_JSON)
-    public ResponseEntity<?> getBooksByTitle(@PathVariable("title") String title){
+    public ResponseEntity<Object> getBooksByTitle(@PathVariable("title") String title){
         return ResponseEntity.ok(bookBankService.findBooksByTitle(title));
     }
 
     @GetMapping(path = "book/{id}", produces = APPLICATION_JSON)
-    public ResponseEntity<?> getBooksById(@PathVariable("id") Long id){
+    public ResponseEntity<Object> getBooksById(@PathVariable("id") Long id){
         return ResponseEntity.ok(bookBankService.getBookById(id));
     }
 
@@ -56,7 +51,7 @@ public class BookBankApi {
     }
 
     @PostMapping(path = "book", /*params = {"file","title","author","year","publisher","publisher","edition","topicId","description"},*/ produces = APPLICATION_JSON)
-    public ResponseEntity<?> addBook(
+    public ResponseEntity<Object> addBook(
             @RequestParam("file") MultipartFile file,
             @RequestParam("title") String title,
             @RequestParam("author") String author,

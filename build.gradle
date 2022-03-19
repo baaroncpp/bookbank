@@ -30,6 +30,7 @@ dependencies {
 	implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
 	implementation 'org.flywaydb:flyway-core'
 	runtimeOnly 'org.postgresql:postgresql'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.6.3'
 }
 
 tasks.named('test') {

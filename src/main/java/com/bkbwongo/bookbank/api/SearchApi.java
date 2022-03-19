@@ -3,10 +3,9 @@ package com.bkbwongo.bookbank.api;
 import com.bkbwongo.bookbank.dto.models.BookDto;
 import com.bkbwongo.bookbank.dto.models.SearchDto;
 import com.bkbwongo.bookbank.service.SearchService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +25,7 @@ import java.nio.file.Paths;
  * @created 20/02/2022 - 11:47 AM
  * @project bookbank
  */
+@Slf4j
 @RestController
 @RequestMapping("api")
 public class SearchApi {
@@ -39,50 +38,9 @@ public class SearchApi {
 
     @Autowired
     private SearchService searchService;
-    /*
-    @PostMapping(path = "search", produces = APPLICATION_JSON)
-    public ResponseEntity<?> search(
-            @RequestParam("search") String search,
-            @RequestParam(value="title", defaultValue="false") boolean title,
-            @RequestParam(value="author", defaultValue="false") boolean author,
-            @RequestParam(value = "year", defaultValue="false") boolean year,
-            @RequestParam(value = "publisher", defaultValue="false") boolean publisher,
-            @RequestParam(value = "topic", defaultValue="false") boolean topic,
-            @RequestParam(value = "md5", defaultValue="false") boolean md5,
-            @RequestParam(value = "default", defaultValue="false") boolean defaultSearch,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
-            @RequestParam("sort") String sort
-    ) {
 
-        Pageable pageable = null;
-
-        switch(sort) {
-            case SORT_DESC :
-                pageable = PageRequest.of(page, size, Sort.by(SORT_BY).descending());
-                break;
-            case SORT_ASC :
-                pageable = PageRequest.of(page, size, Sort.by(SORT_BY).ascending());
-                break;
-            default :
-                pageable = PageRequest.of(page, size, Sort.by(SORT_BY));
-        }
-
-        SearchDto searchDto = new SearchDto();
-        searchDto.setSearch(search);
-        searchDto.setTitle(title);
-        searchDto.setAuthor(author);
-        searchDto.setYear(year);
-        searchDto.setPublisher(publisher);
-        searchDto.setTopic(topic);
-        searchDto.setMd5(md5);
-        searchDto.setDefaultSearch(defaultSearch);
-
-        return ResponseEntity.ok(searchService.makeSearch(searchDto, pageable));
-    }
-    */
     @PostMapping(path = "search", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-    public ResponseEntity<?> search2(@RequestBody SearchDto search) {
+    public ResponseEntity<Object> search(@RequestBody SearchDto search) {
 
         search.validate();
         Pageable pageable = null;
@@ -102,9 +60,8 @@ public class SearchApi {
     }
 
     @GetMapping(path = "/download/{id}")
-    public ResponseEntity<?> download(@PathVariable("id") Long id,  HttpServletRequest request) throws IOException {
+    public ResponseEntity<Object> download(@PathVariable("id") Long id,  HttpServletRequest request) throws IOException {
 
-        System.out.println("Download api reached");
         BookDto book = searchService.getBookById(id);
 
         String fileBasePath = book.getFilePath();
@@ -115,7 +72,7 @@ public class SearchApi {
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            System.out.println("Could not determine file type.");
+            log.error("Could not determine file type.");
         }
 
         // Fallback to the default content type if type could not be determined
