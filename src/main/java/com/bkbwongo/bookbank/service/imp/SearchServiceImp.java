@@ -3,7 +3,7 @@ package com.bkbwongo.bookbank.service.imp;
 import com.bkbwongo.bookbank.commons.exceptions.BadRequestException;
 import com.bkbwongo.bookbank.dto.models.BookDto;
 import com.bkbwongo.bookbank.dto.models.SearchDto;
-import com.bkbwongo.bookbank.dto.service.DtoService;
+import com.bkbwongo.bookbank.dto.service.imp.DtoServiceImp;
 import com.bkbwongo.bookbank.repository.BookRepository;
 import com.bkbwongo.bookbank.repository.TopicRepository;
 import com.bkbwongo.bookbank.service.SearchService;
@@ -24,14 +24,18 @@ import java.util.stream.Collectors;
 @Service
 public class SearchServiceImp implements SearchService {
 
-    @Autowired
     private TopicRepository topicRepository;
-
-    @Autowired
     private BookRepository bookRepository;
+    private DtoServiceImp dtoService;
 
     @Autowired
-    private DtoService dtoService;
+    public SearchServiceImp(TopicRepository topicRepository,
+                            BookRepository bookRepository,
+                            DtoServiceImp dtoService) {
+        this.topicRepository = topicRepository;
+        this.bookRepository = bookRepository;
+        this.dtoService = dtoService;
+    }
 
     @Override
     public List<BookDto> makeSearch(SearchDto searchDto, Pageable pageable) {

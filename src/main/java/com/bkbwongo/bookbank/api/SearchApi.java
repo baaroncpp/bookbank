@@ -36,8 +36,12 @@ public class SearchApi {
     private static final String SORT_ASC = "ASCENDING";
     private static final String SORT_BY = "createdOn";
 
-    @Autowired
     private SearchService searchService;
+
+    @Autowired
+    public SearchApi(SearchService searchService) {
+        this.searchService = searchService;
+    }
 
     @PostMapping(path = "search", consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
     public ResponseEntity<Object> search(@RequestBody SearchDto search) {

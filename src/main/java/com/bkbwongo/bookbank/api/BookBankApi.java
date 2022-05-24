@@ -17,15 +17,19 @@ import java.security.NoSuchAlgorithmException;
  * @project bookbank
  */
 @RestController
-@RequestMapping("api")
+@RequestMapping("/api/v1")
 public class BookBankApi {
 
     private static final String APPLICATION_JSON = "application/json";
 
-    @Autowired
     private BookBankService bookBankService;
 
-    @PostMapping(path = "topic",consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+    @Autowired
+    public BookBankApi(BookBankService bookBankService) {
+        this.bookBankService = bookBankService;
+    }
+
+    @PostMapping(path = "/topic",consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
     public ResponseEntity<Object> addTopic(@RequestBody TopicDto topicDto){
         return ResponseEntity.ok(bookBankService.addTopic(topicDto));
     }

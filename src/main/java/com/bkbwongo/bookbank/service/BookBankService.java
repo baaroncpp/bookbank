@@ -2,6 +2,7 @@ package com.bkbwongo.bookbank.service;
 
 import com.bkbwongo.bookbank.dto.models.BookDto;
 import com.bkbwongo.bookbank.dto.models.TopicDto;
+import com.bkbwongo.bookbank.jpa.models.Topic;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

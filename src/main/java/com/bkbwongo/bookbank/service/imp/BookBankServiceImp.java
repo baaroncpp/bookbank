@@ -5,6 +5,7 @@ import com.bkbwongo.bookbank.constants.enums.Lang;
 import com.bkbwongo.bookbank.dto.models.BookDto;
 import com.bkbwongo.bookbank.dto.models.TopicDto;
 import com.bkbwongo.bookbank.dto.service.DtoService;
+import com.bkbwongo.bookbank.dto.service.imp.DtoServiceImp;
 import com.bkbwongo.bookbank.jpa.models.Book;
 import com.bkbwongo.bookbank.jpa.models.Topic;
 import com.bkbwongo.bookbank.repository.BookRepository;
@@ -36,14 +37,16 @@ public class BookBankServiceImp implements BookBankService {
     private static final String SHA = "SHA-1";
     private static final String MD5 = "MD5";
 
-    @Autowired
     private BookRepository bookRepository;
-
-    @Autowired
     private TopicRepository topicRepository;
+    private DtoService dtoService;
 
     @Autowired
-    private DtoService dtoService;
+    public BookBankServiceImp(BookRepository bookRepository, TopicRepository topicRepository, DtoService dtoService) {
+        this.bookRepository = bookRepository;
+        this.topicRepository = topicRepository;
+        this.dtoService = dtoService;
+    }
 
     @Override
     public BookDto addBook(MultipartFile file, BookDto bookDto) throws IOException, NoSuchAlgorithmException {
@@ -104,7 +107,7 @@ public class BookBankServiceImp implements BookBankService {
         Topic topic = dtoService.convertDTOToTopic(topicDto);
         topic.setCreatedOn(new Date());
 
-        if(topicRepository.findByName(topicDto.getName()).isPresent()){
+        if(topicRepository.existsByName(topicDto.getName())){
             throw new BadRequestException(String.format("Topic %s already exists", topicDto.getName()));
         }
 

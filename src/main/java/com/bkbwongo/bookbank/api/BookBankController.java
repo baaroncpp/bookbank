@@ -37,11 +37,14 @@ import java.util.List;
 @Controller
 public class BookBankController {
 
-    @Autowired
+    private SearchService searchService;
     private BookBankService bookBankService;
 
     @Autowired
-    private SearchService searchService;
+    public BookBankController(BookBankService bookBankService, SearchService searchService) {
+        this.bookBankService = bookBankService;
+        this.searchService = searchService;
+    }
 
     private static final String SORT_ASC = "ASCENDING";
     private static final String SORT_BY = "createdOn";
